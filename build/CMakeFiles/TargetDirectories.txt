@@ -1,0 +1,3 @@
+/Users/anishjaisinghani/Documents/LocalRepos/CursorProject/build/CMakeFiles/game.dir
+/Users/anishjaisinghani/Documents/LocalRepos/CursorProject/build/CMakeFiles/edit_cache.dir
+/Users/anishjaisinghani/Documents/LocalRepos/CursorProject/build/CMakeFiles/rebuild_cache.dir
