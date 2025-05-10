@@ -1,12 +1,15 @@
 #include "Enemy.h"
 
-Enemy::Enemy(int x, int y, int leftBound, int rightBound)
-    : x(x), y(y), leftBound(leftBound), rightBound(rightBound) {}
+Enemy::Enemy(int x, int y) : x(x), y(y) {}
 
 void Enemy::update(const std::vector<Platform>& platforms) {
     // Apply gravity
     velocityY += GRAVITY;
     y += velocityY;
+
+    // Store current position for collision checks
+    float oldX = x;
+    float oldY = y;
 
     // Move horizontally
     x += velocityX;
@@ -20,19 +23,68 @@ void Enemy::update(const std::vector<Platform>& platforms) {
         HEIGHT
     };
 
+    // Find the platform we're standing on
+    const Platform* newPlatform = nullptr;
     for (const auto& platform : platforms) {
         if (checkCollision(enemyRect, platform.getRect())) {
             resolveCollision(platform);
+            if (isGrounded) {
+                newPlatform = &platform;
+            }
         }
     }
 
-    // Change direction when reaching bounds
-    if (x <= leftBound) {
-        x = leftBound;
+    // Update current platform and movement bounds if we're on a new platform
+    if (newPlatform != currentPlatform) {
+        currentPlatform = newPlatform;
+        if (currentPlatform) {
+            updateMovementBounds(*currentPlatform);
+        }
+    }
+
+    // Check if we're about to walk off the platform
+    if (currentPlatform) {
+        SDL_Rect platformRect = currentPlatform->getRect();
+        bool willFallOff = false;
+
+        // Check if next step would be off the platform
+        SDL_Rect nextStepRect = {
+            static_cast<int>(x + velocityX),  // Look ahead in movement direction
+            static_cast<int>(y + 1),          // Check just below feet
+            1,                                // Just check a single pixel
+            1
+        };
+
+        // Check if the next step would be over empty space
+        if (!checkCollision(nextStepRect, platformRect)) {
+            willFallOff = true;
+        }
+
+        // If about to fall off, change direction
+        if (willFallOff) {
+            velocityX = -velocityX;
+            x = oldX;  // Revert to previous position
+        }
+    }
+
+    // Screen boundary checks
+    if (x < 0) {
+        x = 0;
         velocityX = MOVE_SPEED;
-    } else if (x + WIDTH >= rightBound) {
-        x = rightBound - WIDTH;
+    } else if (x + WIDTH > 800) {  // Assuming screen width is 800
+        x = 800 - WIDTH;
         velocityX = -MOVE_SPEED;
+    }
+
+    // Change direction when reaching bounds
+    if (currentPlatform) {
+        if (x <= leftBound) {
+            x = leftBound;
+            velocityX = MOVE_SPEED;
+        } else if (x + WIDTH >= rightBound) {
+            x = rightBound - WIDTH;
+            velocityX = -MOVE_SPEED;
+        }
     }
 }
 
@@ -103,4 +155,27 @@ void Enemy::resolveCollision(const Platform& platform) {
             isGrounded = true;
         }
     }
+}
+
+void Enemy::updateMovementBounds(const Platform& platform) {
+    SDL_Rect platformRect = platform.getRect();
+    // Set bounds to platform edges with a small margin
+    leftBound = platformRect.x + 5;  // Small margin from left edge
+    rightBound = platformRect.x + platformRect.w - 5;  // Small margin from right edge
+}
+
+bool Enemy::isOnPlatform(const Platform& platform) const {
+    SDL_Rect enemyRect = {
+        static_cast<int>(x),
+        static_cast<int>(y),
+        WIDTH,
+        HEIGHT
+    };
+    SDL_Rect platformRect = platform.getRect();
+    
+    // Check if enemy is standing on top of the platform
+    return (enemyRect.y + enemyRect.h <= platformRect.y + 5 &&  // Within 5 pixels of platform top
+            enemyRect.y + enemyRect.h >= platformRect.y - 5 &&
+            enemyRect.x + enemyRect.w > platformRect.x &&
+            enemyRect.x < platformRect.x + platformRect.w);
 } 

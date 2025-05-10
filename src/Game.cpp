@@ -46,7 +46,7 @@ bool Game::init(const std::string& title, int width, int height) {
     player = std::make_unique<Player>(width/2, height/2);
 
     // Create enemy on Platform 1
-    enemy = std::make_unique<Enemy>(150, 350, 100, 300);
+    enemy = std::make_unique<Enemy>(150, 350);
 
     // Set initial render color (black)
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);

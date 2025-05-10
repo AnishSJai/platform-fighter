@@ -5,7 +5,7 @@
 
 class Enemy {
 public:
-    Enemy(int x, int y, int leftBound, int rightBound);
+    Enemy(int x, int y);
     void update(const std::vector<Platform>& platforms);
     void render(SDL_Renderer* renderer);
     bool isHit(const SDL_Rect& attackRect);
@@ -20,11 +20,17 @@ private:
     float x, y;
     float velocityX = MOVE_SPEED;
     float velocityY = 0.0f;
-    int leftBound, rightBound;
     int health = 3;  // Enemy takes 3 hits to defeat
     bool isGrounded = false;
+
+    // Platform tracking
+    const Platform* currentPlatform = nullptr;
+    int leftBound = 0;
+    int rightBound = 0;
 
     // Collision detection
     bool checkCollision(const SDL_Rect& a, const SDL_Rect& b) const;
     void resolveCollision(const Platform& platform);
+    void updateMovementBounds(const Platform& platform);
+    bool isOnPlatform(const Platform& platform) const;
 }; 
