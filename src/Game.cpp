@@ -36,14 +36,17 @@ bool Game::init(const std::string& title, int width, int height) {
         return false;
     }
 
-    // Create player
-    player = std::make_unique<Player>(width/2, height/2);
-
     // Create platforms
     platforms.push_back(Platform(0, 550, 800, 50));  // Ground
     platforms.push_back(Platform(100, 400, 200, 20)); // Platform 1
     platforms.push_back(Platform(400, 300, 200, 20)); // Platform 2
     platforms.push_back(Platform(200, 200, 200, 20)); // Platform 3
+
+    // Create player
+    player = std::make_unique<Player>(width/2, height/2);
+
+    // Create enemy on Platform 1
+    enemy = std::make_unique<Enemy>(150, 350, 100, 300);
 
     // Set initial render color (black)
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
@@ -67,6 +70,16 @@ void Game::handleEvents() {
 
 void Game::update() {
     player->update(platforms);
+    if (enemy->isAlive()) {
+        enemy->update(platforms);
+        
+        // Check if player's attack hits enemy
+        if (player->isAttacking) {
+            if (enemy->isHit(player->getAttackRect())) {
+                std::cout << "Enemy hit! Health: " << enemy->isAlive() << std::endl;
+            }
+        }
+    }
 }
 
 void Game::render() {
@@ -77,6 +90,11 @@ void Game::render() {
     // Draw platforms
     for (const auto& platform : platforms) {
         platform.render(renderer);
+    }
+
+    // Draw enemy if alive
+    if (enemy->isAlive()) {
+        enemy->render(renderer);
     }
 
     // Draw player

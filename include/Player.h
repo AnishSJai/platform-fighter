@@ -12,6 +12,8 @@ public:
     SDL_Rect getRect() const { return {static_cast<int>(x), static_cast<int>(y), WIDTH, HEIGHT}; }
     SDL_Rect getAttackRect() const;
 
+    bool isAttacking = false;
+
 private:
     // Position
     float x, y;
@@ -29,7 +31,6 @@ private:
     bool isFacingRight;
     
     // Attack properties
-    bool isAttacking;
     int attackFrame;
     const int ATTACK_DURATION = 10; // frames
     const int ATTACK_RANGE = 60;    // pixels

@@ -14,6 +14,7 @@ add_executable(game
     src/Game.cpp
     src/Player.cpp
     src/Platform.cpp
+    src/Enemy.cpp
 )
 
 # Include directories

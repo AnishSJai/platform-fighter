@@ -451,6 +451,7 @@ CMakeFiles/game.dir/src/Game.cpp.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__split_buffer \
   /Users/anishjaisinghani/Documents/LocalRepos/CursorProject/include/Player.h \
   /Users/anishjaisinghani/Documents/LocalRepos/CursorProject/include/Platform.h \
+  /Users/anishjaisinghani/Documents/LocalRepos/CursorProject/include/Enemy.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/iostream \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/ios \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__locale \

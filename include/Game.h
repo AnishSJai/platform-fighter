@@ -5,6 +5,7 @@
 #include <vector>
 #include "Player.h"
 #include "Platform.h"
+#include "Enemy.h"
 
 class Game {
 public:
@@ -20,6 +21,15 @@ public:
     // Clean up
     void cleanup();
 
+    // Handle events
+    void handleEvents();
+    
+    // Update game state
+    void update();
+    
+    // Render the game
+    void render();
+
 private:
     // Game window
     SDL_Window* window;
@@ -33,15 +43,9 @@ private:
     // Player
     std::unique_ptr<Player> player;
     
+    // Enemy
+    std::unique_ptr<Enemy> enemy;
+    
     // Platforms
     std::vector<Platform> platforms;
-    
-    // Handle events
-    void handleEvents();
-    
-    // Update game state
-    void update();
-    
-    // Render the game
-    void render();
 };

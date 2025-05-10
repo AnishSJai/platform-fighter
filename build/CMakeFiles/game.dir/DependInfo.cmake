@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/Users/anishjaisinghani/Documents/LocalRepos/CursorProject/src/Enemy.cpp" "CMakeFiles/game.dir/src/Enemy.cpp.o" "gcc" "CMakeFiles/game.dir/src/Enemy.cpp.o.d"
   "/Users/anishjaisinghani/Documents/LocalRepos/CursorProject/src/Game.cpp" "CMakeFiles/game.dir/src/Game.cpp.o" "gcc" "CMakeFiles/game.dir/src/Game.cpp.o.d"
   "/Users/anishjaisinghani/Documents/LocalRepos/CursorProject/src/Platform.cpp" "CMakeFiles/game.dir/src/Platform.cpp.o" "gcc" "CMakeFiles/game.dir/src/Platform.cpp.o.d"
   "/Users/anishjaisinghani/Documents/LocalRepos/CursorProject/src/Player.cpp" "CMakeFiles/game.dir/src/Player.cpp.o" "gcc" "CMakeFiles/game.dir/src/Player.cpp.o.d"
