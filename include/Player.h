@@ -34,6 +34,9 @@ private:
     int attackFrame;
     const int ATTACK_DURATION = 10; // frames
     const int ATTACK_RANGE = 60;    // pixels
+    const int ATTACK_COOLDOWN = 20; // frames between attacks
+    int attackCooldownTimer = 0;    // current cooldown timer
+    bool canAttack = true;          // whether player can attack
 
     // Collision detection
     bool checkCollision(const SDL_Rect& a, const SDL_Rect& b) const;
