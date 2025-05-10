@@ -71,12 +71,21 @@ void Game::handleEvents() {
 void Game::update() {
     player->update(platforms);
     if (enemy->isAlive()) {
-        enemy->update(platforms);
+        enemy->update(platforms, player.get());
         
         // Check if player's attack hits enemy
         if (player->isAttacking) {
             if (enemy->isHit(player->getAttackRect())) {
-                std::cout << "Enemy hit! Health: " << enemy->isAlive() << std::endl;
+                std::cout << "Enemy hit! Remaining health: " << (enemy->isAlive() ? "Alive" : "Defeated") << std::endl;
+            }
+        }
+
+        // Check if enemy's attack hits player
+        if (enemy->isAttacking) {
+            SDL_Rect enemyAttackRect = enemy->getAttackRect();
+            SDL_Rect playerRect = player->getRect();
+            if (SDL_HasIntersection(&enemyAttackRect, &playerRect)) {
+                std::cout << "Player hit by enemy!" << std::endl;
             }
         }
     }

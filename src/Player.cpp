@@ -160,6 +160,11 @@ void Player::handleInput(const Uint8* state) {
 }
 
 SDL_Rect Player::getAttackRect() const {
+    // Only return attack rect during the first half of the attack animation
+    if (attackFrame >= ATTACK_DURATION / 2) {
+        return {0, 0, 0, 0};  // Return empty rect if attack is in recovery
+    }
+
     int attackX = isFacingRight ? x + WIDTH : x - ATTACK_RANGE;
     return {
         attackX,
